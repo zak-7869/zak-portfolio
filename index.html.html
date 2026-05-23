@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeeshan Ali Khan — Full Stack AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --bg2: #141414;
+    --bg3: #1a1a1a;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ece4;
+    --text2: #9a9690;
+    --text3: #5a5753;
+    --accent: #c8f04a;
+    --accent2: #7ef7c4;
+    --blue: #5b9cf6;
+    --orange: #f4a261;
+    --pink: #f472b6;
+    --syne: 'Syne', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  .light {
+    --bg: #f5f3ee;
+    --bg2: #eeebe4;
+    --bg3: #e7e4dc;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.15);
+    --text: #1a1816;
+    --text2: #6b6762;
+    --text3: #a09d99;
+    --accent: #5a8f00;
+    --accent2: #0f7a52;
+    --blue: #1a5fc4;
+    --orange: #b55a1c;
+    --pink: #b5306e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--syne);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background .3s, color .3s;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* THEME TOGGLE */
+  .theme-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    background: var(--bg2);
+    border: 0.5px solid var(--border2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: 0.5px;
+  }
+  .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    margin-bottom: 5rem;
+    padding-bottom: 4rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .hero-name {
+    font-size: clamp(48px, 8vw, 80px);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-summary {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 1.5rem;
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border2);
+    color: var(--text2);
+    transition: all .2s;
+  }
+  .badge:hover { border-color: var(--accent); color: var(--accent); }
+  .badge.hot {
+    background: rgba(200,240,74,0.1);
+    color: var(--accent);
+    border-color: rgba(200,240,74,0.3);
+  }
+  .light .badge.hot {
+    background: rgba(90,143,0,0.1);
+    color: var(--accent);
+    border-color: rgba(90,143,0,0.25);
+  }
+
+  /* CONTACT */
+  .contact-col { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; padding-top: 4px; }
+  .contact-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: color .2s;
+  }
+  .contact-item a { color: var(--text2); text-decoration: none; transition: color .2s; }
+  .contact-item:hover, .contact-item a:hover { color: var(--accent); }
+  .contact-item i { font-size: 13px; opacity: 0.7; }
+
+  /* SECTIONS */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 5rem;
+  }
+  .skill-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    transition: border-color .2s, transform .2s;
+  }
+  .skill-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .skill-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .skill-card-title i { color: var(--accent); font-size: 14px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    color: var(--text2);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 5rem;
+  }
+  .proj-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color .2s, transform .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .proj-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .proj-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+  .proj-card:hover::before { opacity: 0.4; }
+  .proj-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .proj-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .proj-icon.ai  { background: rgba(91,156,246,0.12); color: var(--blue); }
+  .proj-icon.ml  { background: rgba(126,247,196,0.1); color: var(--accent2); }
+  .proj-icon.cv  { background: rgba(244,162,97,0.12); color: var(--orange); }
+  .proj-icon.nlp { background: rgba(244,114,182,0.12); color: var(--pink); }
+  .proj-link { color: var(--text3); text-decoration: none; font-size: 15px; transition: color .2s; }
+  .proj-link:hover { color: var(--accent); }
+  .proj-title { font-size: 14px; font-weight: 700; line-height: 1.35; }
+  .proj-domain { font-size: 12px; line-height: 1.6; color: var(--text2); }
+  .proj-techs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .proj-tech {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    color: var(--text2);
+  }
+
+  /* EDUCATION */
+  .edu-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 5rem; }
+  .edu-item {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color .2s;
+  }
+  .edu-item:hover { border-color: var(--border2); }
+  .edu-name { font-size: 13px; font-weight: 600; }
+  .edu-inst { font-family: var(--mono); font-size: 11px; color: var(--text2); margin-top: 3px; }
+  .edu-yr { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+
+  /* FOOTER */
+  .footer {
+    border-top: 0.5px solid var(--border);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-name { font-size: 13px; font-weight: 700; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-family: var(--mono); font-size: 11px; color: var(--text3); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero, .skills-grid, .projects-grid, .edu-list {
+    animation: fadeUp .6s ease both;
+  }
+  .skills-grid  { animation-delay: .1s; }
+  .projects-grid { animation-delay: .2s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; }
+    .contact-col { align-items: flex-start; }
+    .hero-name { letter-spacing: -2px; }
+    .container { padding: 3rem 1.2rem 5rem; }
+    .theme-btn { top: 1rem; right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-btn" onclick="document.body.classList.toggle('light')" aria-label="Toggle theme">
+  ☀ / ☾ theme
+</button>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="hero-eyebrow">Full Stack AI Engineer</div>
+      <h1 class="hero-name">Zeeshan<br><span>Ali Khan</span></h1>
+      <p class="hero-summary">20+ end-to-end projects across ML, Deep Learning & Generative AI. Specialized in Agentic AI workflows, LLM orchestration, and RAG architectures — from model to production.</p>
+      <div class="badge-row">
+        <span class="badge hot">Agentic AI</span>
+        <span class="badge hot">RAG</span>
+        <span class="badge hot">LLM Orchestration</span>
+        <span class="badge">LangChain</span>
+        <span class="badge">CrewAI</span>
+        <span class="badge">FastAPI</span>
+        <span class="badge">React</span>
+        <span class="badge">AWS</span>
+      </div>
+    </div>
+    <div class="contact-col">
+      <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Karnataka, India</div>
+      <div class="contact-item"><i class="fa-solid fa-phone"></i> +91 9902807869</div>
+      <div class="contact-item"><i class="fa-solid fa-envelope"></i>
+        <a href="mailto:zakfspython@gmail.com">zakfspython@gmail.com</a>
+      </div>
+      <div class="contact-item"><i class="fa-brands fa-github"></i>
+        <a href="https://github.com/zak-7869" target="_blank">github.com/zak-7869</a>
+      </div>
+      <div class="contact-item"><i class="fa-brands fa-linkedin"></i>
+        <a href="https://linkedin.com/in/zeeshan-ali-khan" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div class="section-label">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-title"><i class="fa-solid fa-brain"></i> Generative & Agentic AI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">LangChain</span><span class="skill-tag">LangGraph</span><span class="skill-tag">LangSmith</span>
+        <span class="skill-tag">LangServe</span><span class="skill-tag">CrewAI</span><span class="skill-tag">AutoGen</span>
+        <span class="skill-tag">MCP</span><span class="skill-tag">n8n</span><span class="skill-tag">RAG</span>
+        <span class="skill-tag">Pydantic AI</span><span class="skill-tag">Transformers</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title"><i class="fa-solid fa-chart-line"></i> Machine Learning</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Regression</span><span class="skill-tag">Classification</span>
+        <span class="skill-tag">Clustering</span><span class="skill-tag">Rec. Engines</span>
+        <span class="skill-tag">Time-Series</span><span class="skill-tag">Scikit-learn</span>
+        <span class="skill-tag">Association Rules</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title"><i class="fa-solid fa-microchip"></i> Deep Learning</div>
+      <div class="skill-tags">
+        <span class="skill-tag">ANN</span><span class="skill-tag">CNN</span>
+        <span class="skill-tag">RNN/LSTM</span><span class="skill-tag">Computer Vision</span>
+        <span class="skill-tag">Transfer Learning</span><span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">Keras</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title"><i class="fa-solid fa-layer-group"></i> Full Stack & Cloud</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span><span class="skill-tag">React</span>
+        <span class="skill-tag">FastAPI</span><span class="skill-tag">Django</span>
+        <span class="skill-tag">Flask</span><span class="skill-tag">AWS EC2</span>
+        <span class="skill-tag">S3</span><span class="skill-tag">RDS</span><span class="skill-tag">EBS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title"><i class="fa-solid fa-database"></i> Vector & Data</div>
+      <div class="skill-tags">
+        <span class="skill-tag">FAISS</span><span class="skill-tag">ChromaDB</span>
+        <span class="skill-tag">Embeddings</span><span class="skill-tag">Similarity Search</span>
+        <span class="skill-tag">NumPy</span><span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NLP</span><span class="skill-tag">Tokenization</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title"><i class="fa-solid fa-robot"></i> AI Models & APIs</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Groq LLMs</span><span class="skill-tag">LLM APIs</span>
+        <span class="skill-tag">Audio Models</span><span class="skill-tag">Image Gen Models</span>
+        <span class="skill-tag">Prompt Eng.</span><span class="skill-tag">Model Optimization</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section-label">Featured Projects</div>
+  <div class="projects-grid">
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon ai"><i class="fa-solid fa-robot"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/agentic-crew-ai" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Agentic AI Research & Summarizer</div>
+      <div class="proj-domain">Automated internet research and content summarization using multi-agent pipelines</div>
+      <div class="proj-techs">
+        <span class="proj-tech">CrewAI</span><span class="proj-tech">Groq LLMs</span>
+        <span class="proj-tech">Multi-agent</span><span class="proj-tech">Tool integrations</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon ai"><i class="fa-solid fa-sitemap"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/agentic-MCP" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Agentic MCP Research System</div>
+      <div class="proj-domain">Research automation using Model Context Protocol for structured agent communication</div>
+      <div class="proj-techs">
+        <span class="proj-tech">MCP</span><span class="proj-tech">Agent-Host-Client</span>
+        <span class="proj-tech">Custom tools</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon ai"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/GEN-AI-STUDY-RAG" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">RAG-Based Information Retrieval</div>
+      <div class="proj-domain">Cross-departmental knowledge retrieval using vector-augmented LLM responses</div>
+      <div class="proj-techs">
+        <span class="proj-tech">LangChain</span><span class="proj-tech">LangServe</span>
+        <span class="proj-tech">Vector Stores</span><span class="proj-tech">Embeddings</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon nlp"><i class="fa-solid fa-stethoscope"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/GEN-AI-MEDICAL-CHATBOT" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Medical Domain Chatbot</div>
+      <div class="proj-domain">Intelligent text-generation assistant for medical Q&A and guidance</div>
+      <div class="proj-techs">
+        <span class="proj-tech">LangChain</span><span class="proj-tech">LLM pipelines</span>
+        <span class="proj-tech">Prompt Engineering</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon cv"><i class="fa-solid fa-image"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/Multimodal-Gen-ai" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Multimodal Text-to-Image Chat</div>
+      <div class="proj-domain">General-purpose chatbot accepting text input to generate contextual images</div>
+      <div class="proj-techs">
+        <span class="proj-tech">Transformers</span><span class="proj-tech">Groq LLMs</span>
+        <span class="proj-tech">Image Gen</span><span class="proj-tech">Embeddings</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon ai"><i class="fa-solid fa-microphone"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/GEN-AI-VOICE" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Voice Assistant (Speech-to-Speech)</div>
+      <div class="proj-domain">End-to-end audio assistant with speech-to-text and text-to-speech workflows</div>
+      <div class="proj-techs">
+        <span class="proj-tech">Audio Models</span><span class="proj-tech">Groq LLMs</span>
+        <span class="proj-tech">Transformers</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon cv"><i class="fa-solid fa-eye"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/CV-IMAGE" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Image Classification Systems</div>
+      <div class="proj-domain">High-accuracy classifiers for medical imaging and traffic scene analysis</div>
+      <div class="proj-techs">
+        <span class="proj-tech">CNN</span><span class="proj-tech">TensorFlow</span>
+        <span class="proj-tech">Keras</span><span class="proj-tech">Computer Vision</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon ml"><i class="fa-solid fa-building-columns"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/ML-REGRESSION" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Predictive Analytics — Banking</div>
+      <div class="proj-domain">House price estimation and loan assessment models for financial decision support</div>
+      <div class="proj-techs">
+        <span class="proj-tech">Regression</span><span class="proj-tech">Scikit-learn</span>
+        <span class="proj-tech">Feature Eng.</span><span class="proj-tech">Hyperparameter Tuning</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-top">
+        <div class="proj-icon nlp"><i class="fa-solid fa-comment-dots"></i></div>
+        <a class="proj-link" href="https://github.com/zak-7869/NLP-CLASSIFICATION" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+      <div class="proj-title">Sentiment Analysis Engine</div>
+      <div class="proj-domain">General-purpose NLP pipeline for classifying sentiment in textual data</div>
+      <div class="proj-techs">
+        <span class="proj-tech">NLP</span><span class="proj-tech">Tokenization</span>
+        <span class="proj-tech">Vector Models</span><span class="proj-tech">Scikit-learn</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section-label">Education</div>
+  <div class="edu-list">
+    <div class="edu-item">
+      <div>
+        <div class="edu-name">Bachelor of Engineering — Mechanical Engineering</div>
+        <div class="edu-inst">GNDEC Bidar, VTU Affiliated, Karnataka</div>
+      </div>
+      <div class="edu-yr">B.E.</div>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-name">Pre-University Course (PUC — Science)</div>
+        <div class="edu-inst">Shaheen College, Bidar, Karnataka</div>
+      </div>
+      <div class="edu-yr">PUC</div>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-name">Secondary School Certificate (10th)</div>
+        <div class="edu-inst">GNPS Bidar, Karnataka</div>
+      </div>
+      <div class="edu-yr">SSC</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-name">Zeeshan Ali Khan</div>
+    <div class="footer-links">
+      <a href="mailto:zakfspython@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+      <a href="https://github.com/zak-7869" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="https://linkedin.com/in/zeeshan-ali-khan" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const btn = document.querySelector('.theme-btn');
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') document.body.classList.add('light');
+  btn.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  });
+</script>
+</body>
+</html>
